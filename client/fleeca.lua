@@ -281,12 +281,13 @@ RegisterNetEvent('electronickit:UseElectronickit', function()
                                 TriggerEvent("mhacking:show")
                                 TriggerEvent("mhacking:start", math.random(6, 7), math.random(12, 15), OnHackDone)
                                 if copsCalled or not Config.SmallBanks[closestBank]["alarm"] then return end
-                                local s1, s2 = GetStreetNameAtCoord(pos.x, pos.y, pos.z)
-                                local street1 = GetStreetNameFromHashKey(s1)
-                                local street2 = GetStreetNameFromHashKey(s2)
-                                local streetLabel = street1
-                                if street2 then streetLabel = streetLabel .. " " .. street2 end
-                                TriggerServerEvent("qb-bankrobbery:server:callCops", "small", closestBank, streetLabel, pos)
+                                -- local s1, s2 = GetStreetNameAtCoord(pos.x, pos.y, pos.z)
+                                -- local street1 = GetStreetNameFromHashKey(s1)
+                                -- local street2 = GetStreetNameFromHashKey(s2)
+                                -- local streetLabel = street1
+                                -- if street2 then streetLabel = streetLabel .. " " .. street2 end
+                                exports['ps-dispatch']:FleecaBankRobbery()
+                                -- TriggerServerEvent("qb-bankrobbery:server:callCops", "small", closestBank, streetLabel, pos)
                                 copsCalled = true
                                 SetTimeout(60000 * Config.OutlawCooldown, function() copsCalled = false end)
                             end, function() -- Cancel
