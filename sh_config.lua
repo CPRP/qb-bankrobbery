@@ -1,5 +1,6 @@
 Config = Config or {}
 
+<<<<<<< HEAD:config.lua
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
 
 Config.ItemTiers = 1
@@ -57,6 +58,24 @@ Config.LockerRewardsPacific = {
         [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
     },
 }
+=======
+--- This is called whenever an item check occurs
+---
+--- Accepted formats for `items`:
+--- ```lua
+--- 'itemName'
+---
+--- {'item1', 'item2', 'etc'}
+---
+--- {['item1'] = amount, ['item2'] = 2, ['etc' = 5]} -- the amount here is the amount needed of that item, if the amount variable is defined when this format is used, the amount variable will be prioritized
+--- ```
+--- @param items table | array | string
+--- @param amount number | nil
+--- @return boolean
+function Config.HasItem(items, amount)
+    return QBCore.Functions.HasItem(items, amount)
+end
+>>>>>>> upstream/main:sh_config.lua
 
 Config.PowerStations = {
     [1] = {
@@ -235,7 +254,7 @@ Config.SmallBanks = {
         ["isOpened"] = false,
         ["lockers"] = {
             [1] = {
-                ["coords"] = vector3(350.99, -54.13, 49.01),
+                ["coords"] = vector3(-350.99, -54.13, 49.01),
                 ["isBusy"] = false,
                 ["isOpened"] = false
             },
