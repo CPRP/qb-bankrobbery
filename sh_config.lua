@@ -1,64 +1,5 @@
 Config = Config or {}
 
-<<<<<<< HEAD:config.lua
-Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
-
-Config.ItemTiers = 1
-
-Config.MinimumPaletoPolice = 3
-Config.MinimumPacificPolice = 3
-Config.MinimumFleecaPolice = 3
-Config.MinimumThermitePolice = 2
-Config.OutlawCooldown = 5 -- The amount of minutes it takes for the cops to be able to be called again after they were called
-
-Config.HitsNeeded = 13 -- The amount of powerstation needed to be hit to cause a blackout
-Config.BlackoutTimer = 10 -- The amount of minutes a blackout will take until all power comes back
-
-Config.RewardTypes = {
-    [1] = {
-        type = "item"
-    },
-    [2] = {
-        type = "money"
-    }
-}
-
-Config.LockerRewards = {
-    ["tier1"] = {
-        [1] = {item = "goldchain", minAmount = 5, maxAmount = 15},
-    },
-    ["tier2"] = {
-        [1] = {item = "rolex", minAmount = 5, maxAmount = 15},
-    },
-    ["tier3"] = {
-        [1] = {item = "goldbar", minAmount = 1, maxAmount = 2},
-    },
-}
-
-Config.LockerRewardsPaleto = {
-    ["tier1"] = {
-        [1] = {item = "goldchain", minAmount = 10, maxAmount = 20},
-    },
-    ["tier2"] = {
-        [1] = {item = "rolex", minAmount = 10, maxAmount = 20},
-    },
-    ["tier3"] = {
-        [1] = {item = "goldbar", minAmount = 2, maxAmount = 4},
-    },
-}
-
-Config.LockerRewardsPacific = {
-    ["tier1"] = {
-        [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
-    },
-    ["tier2"] = {
-        [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
-    },
-    ["tier3"] = {
-        [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
-    },
-}
-=======
 --- This is called whenever an item check occurs
 ---
 --- Accepted formats for `items`:
@@ -75,7 +16,6 @@ Config.LockerRewardsPacific = {
 function Config.HasItem(items, amount)
     return QBCore.Functions.HasItem(items, amount)
 end
->>>>>>> upstream/main:sh_config.lua
 
 Config.PowerStations = {
     [1] = {
