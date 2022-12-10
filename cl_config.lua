@@ -2,6 +2,16 @@ Config = Config or {}
 
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
 
+------ / Hack The Fleeca Bank (Main Door) / Laptop Minigame
+Config.FleecaTime = 15
+Config.FleecaBlocks = 4
+Config.FleecaRepeat = 2
+
+------ / Hack The Pacific Bank (Main Door) / Laptop Minigame
+Config.PacificTime = 15
+Config.PacificBlocks = 4
+Config.PacificRepeat = 2
+
 -- This is the handler for the cop count, you can change this to anything you want as this is by default the qb-policejob event
 RegisterNetEvent('police:SetCopCount', function(amount)
     CurrentCops = amount
@@ -15,15 +25,15 @@ function Config.DoorlockAction(doorId, setLocked)
     TriggerServerEvent('qb-doorlock:server:updateState', doorId, setLocked, false, false, true, false, false)
 end
 
---- This function will be triggered once the hack is done
---- @param success boolean
---- @param bank number | string
---- @return nil
-function Config.OnHackDone(success, bank)
+---//This function will be triggered once the hack is done
+--- //@param success boolean
+--- //@param bank number | string
+--- //@return nil
+--[[function Config.OnHackDone(success, bank)
     TriggerEvent('mhacking:hide')
     if not success then return end
     TriggerServerEvent('qb-bankrobbery:server:setBankState', bank)
-end
+end ]]
 
 --- This will be triggered once an action happens that can drop evidence
 --- @param pos vector3
