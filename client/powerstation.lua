@@ -49,6 +49,50 @@ RegisterNetEvent('thermite:StopFires', function()
     end
 end)
 
+-- RegisterNetEvent('thermite:UseThermite', function()
+--     local ped = PlayerPedId()
+--     local pos = GetEntityCoords(ped)
+--     if closestStation ~= 0 then
+--         Config.OnEvidence(pos, 85)
+--         local dist = #(pos - Config.PowerStations[closestStation].coords)
+--         if dist < 1.5 then
+--             if CurrentCops >= Config.MinimumThermitePolice then
+--                 if not Config.PowerStations[closestStation].hit then
+--                     loadAnimDict("weapon@w_sp_jerrycan")
+--                     TaskPlayAnim(PlayerPedId(), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, 180, 49, 0, 0, 0, 0)
+--                     Config.ShowRequiredItems(requiredItems, false)
+--                     SetNuiFocus(true, true)
+--                     SendNUIMessage({
+--                         action = "openThermite",
+--                         amount = math.random(5, 10),
+--                     })
+--                     currentStation = closestStation
+--                 else
+--                     QBCore.Functions.Notify(Lang:t("error.fuses_already_blown"), "error")
+--                 end
+--             else
+--                 QBCore.Functions.Notify(Lang:t("error.minium_police_required", {police = Config.MinimumThermitePolice}), "error")
+--             end
+--         end
+--     elseif currentThermiteGate ~= 0 then
+--         Config.OnEvidence(pos, 85)
+--         if CurrentCops >= Config.MinimumThermitePolice then
+--             currentGate = currentThermiteGate
+--             loadAnimDict("weapon@w_sp_jerrycan")
+--             TaskPlayAnim(PlayerPedId(), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, -1, 49, 0, 0, 0, 0)
+--             Config.ShowRequiredItems(requiredItems, false)
+--             SetNuiFocus(true, true)
+--             SendNUIMessage({
+--                 action = "openThermite",
+--                 amount = math.random(5, 10),
+--             })
+--         else
+--             QBCore.Functions.Notify(Lang:t("error.minium_police_required", {police = Config.MinimumThermitePolice}), "error")
+--         end
+--     end
+-- end)
+
+---REPLACED CODE ABOVE TO UTALIZE PS-UI THERMITE---
 RegisterNetEvent('thermite:UseThermite', function()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
@@ -61,12 +105,16 @@ RegisterNetEvent('thermite:UseThermite', function()
                     loadAnimDict("weapon@w_sp_jerrycan")
                     TaskPlayAnim(PlayerPedId(), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, 180, 49, 0, 0, 0, 0)
                     Config.ShowRequiredItems(requiredItems, false)
-                    SetNuiFocus(true, true)
-                    SendNUIMessage({
-                        action = "openThermite",
-                        amount = math.random(5, 10),
-                    })
+                    exports['ps-ui']:Thermite(function(success)
+                        if success then
+                            QBCore.Functions.Notify(Lang:t("success.fuses_are_blown"), "success")
+                            TriggerServerEvent("qb-bankrobbery:server:SetStationStatus", currentStation, true)
+                        else
+                            QBCore.Functions.Notify("You failed!", "error")
+                        end
+                    end, 30, 5, 3)
                     currentStation = closestStation
+                    TriggerServerEvent('qb-bankrobbery:server:removethermite')
                 else
                     QBCore.Functions.Notify(Lang:t("error.fuses_already_blown"), "error")
                 end
@@ -81,11 +129,16 @@ RegisterNetEvent('thermite:UseThermite', function()
             loadAnimDict("weapon@w_sp_jerrycan")
             TaskPlayAnim(PlayerPedId(), "weapon@w_sp_jerrycan", "fire", 3.0, 3.9, -1, 49, 0, 0, 0, 0)
             Config.ShowRequiredItems(requiredItems, false)
-            SetNuiFocus(true, true)
-            SendNUIMessage({
-                action = "openThermite",
-                amount = math.random(5, 10),
-            })
+            exports['ps-ui']:Thermite(function(success)
+                if success then
+                    QBCore.Functions.Notify(Lang:t("success.door_has_opened"), "success")
+                    Config.DoorlockAction(currentGate, false)
+                    currentGate = 0
+                else
+                    QBCore.Functions.Notify("You failed!", "error")
+                end
+            end, 30, 5, 3)
+            TriggerServerEvent('qb-bankrobbery:server:removethermite')
         else
             QBCore.Functions.Notify(Lang:t("error.minium_police_required", {police = Config.MinimumThermitePolice}), "error")
         end
