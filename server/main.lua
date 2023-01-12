@@ -120,6 +120,15 @@ end
 
 -- Events
 
+---ADDED THE EVENT BELOW FOR THE ADDED PS-UI THERMITE EVENT IN POWERSTATION.LUA---
+RegisterNetEvent('qb-bankrobbery:server:removethermite', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+    Player.Functions.RemoveItem('thermite', 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["thermite"], "remove")
+end)
+
 RegisterNetEvent('qb-bankrobbery:server:setBankState', function(bankId)
     if robberyBusy then return end
     if bankId == "paleto" then
